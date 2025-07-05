@@ -25,6 +25,6 @@ const skillPostSchema = new mongoose.Schema({
         type: String,
         default: "Anonymous"
     }
-}, { timestamps });
+}, { timestamps: true });
 
 module.exports = mongoose.model("SkillPost", skillPostSchema);

@@ -19,6 +19,6 @@ const helpRequestSchema = new mongoose.Schema({
         type: String,
         default: "Anonymous",
     }
-}, { timestamps })
+}, { timestamps: true })
 
 module.exports = new mongoose.model("HelpRequest", helpRequestSchema);
