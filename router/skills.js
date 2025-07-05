@@ -2,6 +2,8 @@ const express = require("express");
 const SkillPost = require("../models/SkillPost");
 const { default: mongoose } = require("mongoose");
 const skillsRouter = express.Router();
+const { commonFieldsValidation } = require("./validators/commonValidator");
+const { validationResult } = require("express-validator");
 
 
 //Fetch all the skills
@@ -9,7 +11,7 @@ skillsRouter.get("/api/skills", async (req, res) => {
 
     try {
         const skillPosts = await SkillPost.find();
-        res.status(200).json(skillPosts);
+        res.status(200).json({ data: skillPosts });
 
     } catch (error) {
         res.status(500).json({ message: "Error Fetching Skills", error: error.message })
@@ -42,9 +44,14 @@ skillsRouter.get("/api/skills/:id", async (req, res) => {
 
 
 
-skillsRouter.post("/api/skills", async (req, res) => {
+skillsRouter.post("/api/skills", commonFieldsValidation, async (req, res) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { title, tag, description } = req.body;
     try {
-        const { title, tag, description } = req.body;
 
         const newSkill = new SkillPost({ title, tag, description });
         await newSkill.save();

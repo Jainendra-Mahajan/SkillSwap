@@ -4,7 +4,7 @@ const commentSchema = new mongoose.Schema({
     postId: {
         type: mongoose.Types.ObjectId,
         ref: "SkillPost",
-        required: true
+        required: true,
     },
 
     comment: {
@@ -14,7 +14,7 @@ const commentSchema = new mongoose.Schema({
 
     postedBy: {
         type: String,
-        default: Anonymous
+        default: "Anonymous"
     },
 
     parentId: {
