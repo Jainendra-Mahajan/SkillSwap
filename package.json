@@ -1,0 +1,24 @@
+{
+  "name": "skillswap",
+  "version": "1.0.0",
+  "description": "A Developer Skill-Sharing App — “Post what you know, Learn what you don’t.”",
+  "keywords": [
+    "skillSwap"
+  ],
+  "license": "ISC",
+  "author": "Jainendra Mahajan",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.1",
+    "nodemon": "^3.1.10"
+  }
+}
