@@ -1,6 +1,11 @@
+import { useNavigate } from "react-router";
+
 const SkillCard = ({ skill }) => {
+    const navigate = useNavigate();
     return (
-        <div className="m-3 card bg-base-100 shadow-md border border-base-300 p-6 rounded-xl transition hover:shadow-lg">
+        <div className="m-3 card bg-base-100 shadow-md border border-base-300 p-6 rounded-xl transition hover:shadow-lg cursor-pointer"
+            onClick={() => navigate(`/skills/${skill?._id}`)}
+        >
 
             <div className="badge badge-primary mb-3 text-xs px-3 py-1">{skill?.tag}</div>
 

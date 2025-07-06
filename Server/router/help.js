@@ -21,6 +21,28 @@ helpRouter.get("/api/help", async (req, res) => {
     }
 });
 
+helpRouter.get("/api/help/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid Help ID format" })
+        }
+
+        const helpById = await HelpRequest.findById(id);
+
+        if (helpById) {
+            return res.status(200).json({ data: helpById });
+        }
+
+        else {
+            return res.status(404).json({ message: "Query not found with the specified ID" })
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching Query with Specified Id", error: error.message })
+    }
+})
+
 helpRouter.post("/api/help", commonFieldsValidation, async (req, res) => {
 
     const errors = validationResult(req);

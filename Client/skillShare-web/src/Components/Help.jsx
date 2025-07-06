@@ -23,13 +23,14 @@ const Help = () => {
     }, [])
 
     return (
-        <div className='flex flex-col justify-center md:mx-50'>
+
+        <div>
             <HelpInputCard />
-            {
-                helpPosts.length > 0 && helpPosts.map((help) => (
-                    <HelpCard key={help?._id} help={help} />
-                ))
-            }
+            <div className="mt-10 space-y-5 max-w-2xl mx-auto">
+                {helpPosts.map((help) => (
+                    <HelpCard key={help._id} help={help} />
+                ))}
+            </div>
         </div>
     )
 }

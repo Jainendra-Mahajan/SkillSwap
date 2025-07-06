@@ -3,6 +3,7 @@ import Body from "./Components/Body";
 import AddSkill from "./Components/AddSkill";
 import Help from "./Components/Help";
 import Home from "./Components/Home";
+import PostDetail from "./Components/PostDetail";
 function App() {
 
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="add-skill" element={<AddSkill />} />
             <Route path="ask-help" element={<Help />} />
+            <Route path="/:type/:id" element={<PostDetail />} />
           </Route>
         </Routes>
 
