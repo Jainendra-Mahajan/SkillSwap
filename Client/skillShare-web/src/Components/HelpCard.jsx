@@ -1,12 +1,12 @@
+import { useState } from "react";
+
 const HelpCard = ({ help }) => {
+
     return (
         <div className="m-3 card bg-base-100 shadow-md border border-base-300 p-6 rounded-xl transition hover:shadow-lg">
 
             <div className="badge badge-primary mb-3 text-xs px-3 py-1">{help?.tag}</div>
-
-
             <h2 className="text-xl font-bold mb-2">{help.title}</h2>
-
             <p className="text-gray-700 text-sm mb-4">{help.description}</p>
 
             <div className="flex justify-between items-center text-sm text-gray-500">
