@@ -1,12 +1,20 @@
-
+import { BrowserRouter, Route, Routes } from "react-router";
+import Body from "./Components/Body";
+import AddSkill from "./Components/AddSkill";
+import Help from "./Components/Help";
 function App() {
 
   return (
     <>
-      <div>
-        <h1 className='font-extralight'>Hello World</h1>
-        <button className="btn">Default</button>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Body />} >
+            <Route path="add-skill" element={<AddSkill />} />
+            <Route path="ask-help" element={<Help />} />
+          </Route>
+        </Routes>
+
+      </BrowserRouter>
     </>
   )
 }
