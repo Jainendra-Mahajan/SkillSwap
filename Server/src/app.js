@@ -8,7 +8,10 @@ const commentRouter = require("../router/comment");
 require('dotenv').config();
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}))
 app.use(express.json());
 app.use("/", skillsRouter);
 app.use("/", helpRouter)
