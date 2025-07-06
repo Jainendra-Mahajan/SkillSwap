@@ -1,11 +1,14 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router'
+import Comment from './Comment';
 
 const PostDetail = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
     const [post, setPost] = useState();
+    const [comments, setComments] = useState([]);
+
 
     const fetchPost = async () => {
 
@@ -18,10 +21,25 @@ const PostDetail = () => {
         }
     }
 
-    useState(() => {
+    const fetchComments = async () => {
+        try {
+            const res = await axios.get(`http://localhost:3000/api/comments?postId=${id}`);
+            setComments(res.data?.data || []);
+        } catch (err) {
+            console.error("Error fetching comments", err);
+        }
+    };
+
+    useEffect(() => {
         fetchPost();
 
     }, [])
+
+    useEffect(() => {
+        fetchComments();
+
+    }, [])
+
     if (!post) return <div className="text-center mt-10">Loading...</div>;
 
     return (
@@ -50,10 +68,11 @@ const PostDetail = () => {
                         ❤️ {post.likes || 0}
                     </div>
                     <div className="btn btn-outline btn-sm gap-1">
-                        💬 {post.comments?.length || 0}
+                        💬 {comments?.length || 0}
                     </div>
                 </div>
             </div>
+            <Comment postId={id} />
         </div>
     );
 };
