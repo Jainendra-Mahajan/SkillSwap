@@ -1,56 +1,49 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import axios from "axios";
+import React, { useState } from "react";
 
-const Comment = ({ postId }) => {
-    const [comments, setComments] = useState([]);
+const Comment = ({ postId, comments, refetch }) => {
+
     const [comment, setComment] = useState("");
 
-    const fetchComments = async () => {
-        try {
-            const res = await axios.get(`http://localhost:3000/api/comments?postId=${postId}`);
-            setComments(res.data?.data || []);
-        } catch (err) {
-            console.error("Error fetching comments", err);
-        }
-    };
-
     const handleSubmit = async () => {
-        if (comment.length < 5) return;
+        if (comment.trim().length < 5) return;
 
         try {
-            await axios.post("http://www.localhost:3000/api/comments", {
-                postId: postId,
-                comment: comment
-            }, { withCredentials: true })
+            await axios.post(
+                "http://localhost:3000/api/comments",
+                { postId, comment },
+                { withCredentials: true }
+            );
 
             setComment("");
-            fetchComments();
-
+            refetch();
         } catch (error) {
-            console.error("Error posting comment", err);
+            console.error("Error posting comment", error);
         }
+    };
+    if (comments === null) {
+        return <p className="text-center text-gray-400">Loading comments…</p>;
     }
 
-    useEffect(() => {
-        fetchComments()
-    }, [])
     return (
         <div className="mt-8 p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-4 text-gray-800">💬 Comments</h3>
 
             <div className="space-y-4 mb-6">
-                {comments.length > 0 ? (
+                {comments.length ? (
                     comments.map((c) => (
                         <div
                             key={c._id}
                             className="border border-gray-200 p-4 rounded-md shadow-sm bg-gray-50"
                         >
                             <p className="text-sm text-gray-700">{c.comment}</p>
-                            <p className="text-xs text-gray-500 mt-1">— {c.postedBy || "Anonymous"}</p>
+                            <p className="text-xs text-gray-500 mt-1">
+                                — {c.postedBy || "Anonymous"}
+                            </p>
                         </div>
                     ))
                 ) : (
-                    <p className="text-sm text-gray-400">No comments yet. Be the first one!</p>
+                    <p className="text-sm text-gray-400">No comments yet. Be the first!</p>
                 )}
             </div>
 

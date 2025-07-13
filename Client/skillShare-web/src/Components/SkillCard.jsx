@@ -1,7 +1,30 @@
 import { useNavigate } from "react-router";
+import useComments from "../utils/useComments";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const SkillCard = ({ skill }) => {
     const navigate = useNavigate();
+    const [commentsCount, setCommentsCount] = useState(0);
+
+    const fetchCommentCount = async () => {
+        try {
+            const res = await axios.get(
+                `http://localhost:3000/api/comments/count?postId=${skill._id}`,
+                { withCredentials: true }
+            );
+            setCommentsCount(res.data?.data);
+        } catch (err) {
+            console.error("Error fetching comment count", err);
+            setCommentsCount(0);
+        }
+    };
+
+    useEffect(() => {
+        fetchCommentCount()
+
+    }, [skill?.id])
+
     return (
         <div className="m-3 card bg-base-100 shadow-md border border-base-300 p-6 rounded-xl transition hover:shadow-lg cursor-pointer"
             onClick={() => navigate(`/skills/${skill?._id}`)}
@@ -24,7 +47,7 @@ const SkillCard = ({ skill }) => {
                     </button>
 
                     <button className="flex items-center gap-1 btn btn-sm btn-outline">
-                        💬 {skill?.comments?.length || 0}
+                        💬 {commentsCount || 0}
                     </button>
                 </div>
 

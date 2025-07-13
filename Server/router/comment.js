@@ -3,6 +3,22 @@ const { default: mongoose } = require("mongoose");
 const Comment = require("../models/Comment");
 const commentRouter = express.Router();
 
+commentRouter.get("/api/comments/count", async (req, res) => {
+    const { postId } = req.query;
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+        return res.status(400).json({ message: "Invalid skill ID format" })
+    }
+
+    try {
+        const comment = await Comment.countDocuments({ postId });
+
+        return res.status(200).json({ data: comment })
+    } catch (error) {
+        return res.status(500).json({ message: "Error fetching comment", error: error.message })
+    }
+
+})
+
 commentRouter.get("/api/comments", async (req, res) => {
     const { postId } = req.query;
     if (!mongoose.Types.ObjectId.isValid(postId)) {
